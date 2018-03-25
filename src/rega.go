@@ -1,187 +1,184 @@
 package main
 
-type state struct{
+import (
+	"fmt"
+)
 
+type state struct {
 	symbol rune
-	edge1 *state
-	edge2 *state
-
+	edge1  *state
+	edge2  *state
 }
 
-
-type nfa struct{
-
+type nfa struct {
 	initial *state
-	accept *state
-
+	accept  *state
 }
-
 
 func poregtonfa(postfix string) *nfa {
 
 	//Array of pointers to nfa's
 	nfastack := []*nfa{}
 
-	for _, r :=  postfix {
+	for _, r := range postfix {
 
-		switch r
-		{
-			case '.':
+		switch r {
+		case '.':
 
-				//Pop 2 elements off the nfa stack
-				//pop the last nfa off the stack
-				frag2 := nfastack[len(nfastack)-1]
-				//set the nfastack to everything except the last element
-				nfastack = nfastack[:nfastack-1]
-				//pop the last nfa off the stack
-				frag1 := nfastack[len(nfastack)-1]
-				//set the nfastack to everything except the last element
-				nfastack = nfastack[:nfastack-1]
+			//Pop 2 elements off the nfa stack
+			//pop the last nfa off the stack
+			frag2 := nfastack[len(nfastack)-1]
+			//set the nfastack to everything except the last element
+			nfastack = nfastack[:len(nfastack)-1]
+			//pop the last nfa off the stack
+			frag1 := nfastack[len(nfastack)-1]
+			//set the nfastack to everything except the last element
+			nfastack = nfastack[:len(nfastack)-1]
 
-				//Frag1's 1st edge should point to edge2's initial state
-				frag1.accept.edge1 = frag2.initial
+			//Frag1's 1st edge should point to edge2's initial state
+			frag1.accept.edge1 = frag2.initial
 
-				//push new fragment to the nfa stack,
-				//set its initial state to the initial state of frag1
-				//set its accept state to the accept state of frag2
-				nfastack = append(nfastack, 
-					&nfa(
-						initial: frag1.initial, 
-						accept:  frag2.accept
-					)
-				)
+			//push new fragment to the nfa stack,
+			//set its initial state to the initial state of frag1
+			//set its accept state to the accept state of frag2
+			nfastack = append(nfastack, &nfa{initial: frag1.initial, accept: frag2.accept})
 
-			case '|':
+		case '|':
 
-				//Pop 2 elements off the nfa stack
-				//pop the last nfa off the stack
-				frag2 := nfastack[len(nfastack)-1]
-				//set the nfastack to everything except the last element
-				nfastack = nfastack[:nfastack-1]
-				//pop the last nfa off the stack
-				frag1 := nfastack[len(nfastack)-1]
-				//set the nfastack to everything except the last element
-				nfastack = nfastack[:nfastack-1]
+			//Pop 2 elements off the nfa stack
+			//pop the last nfa off the stack
+			frag2 := nfastack[len(nfastack)-1]
+			//set the nfastack to everything except the last element
+			nfastack = nfastack[:len(nfastack)-1]
+			//pop the last nfa off the stack
+			frag1 := nfastack[len(nfastack)-1]
+			//set the nfastack to everything except the last element
+			nfastack = nfastack[:len(nfastack)-1]
 
-				//Frag1's 1st edge should point to edge2's initial state
-				frag1.accept.edge1 = frag2.initial
+			//Frag1's 1st edge should point to edge2's initial state
+			frag1.accept.edge1 = frag2.initial
 
-				//initial state points to frag1 and frag2 initial states
-				initial := state{
-					edge1: frag1.initial, 
-					edge2: frag2.initial
-				}
+			//initial state points to frag1 and frag2 initial states
+			initial := state{edge1: frag1.initial, edge2: frag2.initial}
 
-				
-				//Accept becomes an empty state
-				accept := state{}
-				frag1.accept.edge1 = &accept
-				frag2.accept.edge1 = &accept
+			//Accept becomes an empty state
+			accept := state{}
+			frag1.accept.edge1 = &accept
+			frag2.accept.edge1 = &accept
 
-				//push new fragment to the nfa stack,
-				//set its initial state to the new initial state
-				//set its accept state to the new accept state
-				nfastack = append(nfastack, 
-					&nfa(
-						initial: &initial, 
-						accept:  &accept
-					)
-				)
+			//push new fragment to the nfa stack,
+			//set its initial state to the new initial state
+			//set its accept state to the new accept state
+			nfastack = append(nfastack, &nfa{initial: &initial, accept: &accept})
 
-			case '*':
-				//pop the last nfa off the stack
-				frag := nfastack[len(nfastack)-1]
-				//set the nfastack to everything except the last element
-				nfastack = nfastack[:nfastack-1]
+		case '*':
+			//pop the last nfa off the stack
+			frag := nfastack[len(nfastack)-1]
+			//set the nfastack to everything except the last element
+			nfastack = nfastack[:len(nfastack)-1]
 
-				//push new fragment to the nfa stack,
-				//set its initial state to the new initial state
-				//set its accept state to the new accept state
-				nfastack = append(nfastack, 
-					&nfa(
-						initial: &initial, 
-						accept:  &accept
-					)
-				)
+			//Accept becomes an empty state
+			accept := state{}
 
-				//Accept becomes an empty state
-				accept := state{}
+			initial := state{edge1: frag.initial, edge2: &accept}
 
-				initial := state{
-					edge1: frag.initial,
-					edge2: &accept
-				}
+			frag.accept.edge1 = frag.initial
+			frag.accept.edge2 = &accept
 
-				frag.accept.edge1 = frag.initial
-				frag.accept.edge2 = &accept
+			//Push to the Nfa stack
+			nfastack = append(nfastack, &nfa{initial: &initial, accept: &accept})
 
-				//Push to the Nfa stack
-				nfastack = append(nfastack, 
-					&nfa(
-						initial: &initial, 
-						accept:  &accept
-					)
-				)
+		default:
+			//empty state for accept
+			accept := state{}
 
-			default:
-				//empty state for accept
-				accept := state{}
-				
-				initial := state{
-					symbol: r,
-					edge1: &accept
-				}
+			initial := state{symbol: r, edge1: &accept}
 
-				//Push to the Nfa stack
-				nfastack = append(nfastack, 
-					&nfa(
-						initial: &initial, 
-						accept:  &accept
-					)
-				)	
+			//Push to the Nfa stack
+			nfastack = append(nfastack, &nfa{initial: &initial, accept: &accept})
 
 		}
 
 	}
 
+	return nfastack[0]
+}
 
-	func pomatch(po string,s string) bool{
+func addState(listState []*state, singleState *state, acceptState *state) []*state {
 
-		//our bool value to be returned
-		ismatch := false
+	listState = append(listState, singleState)
 
-		//Postfix to NFA regular expression
-		ponfa := poregtonfa(po)
+	if singleState != acceptState && singleState.symbol == 0 {
 
-		current := []*state{}
-		next := []*state{}
+		//Recusive Function of the addState
+		listState = addState(listState, singleState.edge1, acceptState)
 
-		//Loop through the s String one char at a time
-		for _, r := range s {
+		//edge2 is not equal the nil value run the method again
+		//If the state has a second edge
+		if singleState.edge2 != nil {
 
-			for _, c := range current {
-				
-				if c.symbol == r {
-					
-				}
+			//Recusive Function of the addState
+			listState = addState(listState, singleState.edge1, acceptState)
+
+		}
+
+	}
+
+	return listState
+
+}
+
+func pomatch(po string, s string) bool {
+
+	//our bool value to be returned
+	ismatch := false
+
+	//Postfix to NFA regular expression
+	ponfa := poregtonfa(po)
+
+	current := []*state{}
+	next := []*state{}
+
+	//Add all the initial states to the current array
+	current = addState(current[:], ponfa.initial, ponfa.accept)
+
+	//Loop through the s String one char at a time
+	for _, r := range s {
+
+		for _, c := range current {
+
+			if c.symbol == r {
+
+				next = addState(next[:], c.edge1, ponfa.accept)
 
 			}
 
-			//Replace current array with everything from the next arary
-			//Then empty the next array and make each entry blank
-			current, next = next, []*state{}
-
 		}
 
-		return ismatch
-	}
-	
-
-	func main() {
-
-		//Our test String
-		fmt.Println(pomatch("ab.c*|", "cccc"))
+		//Replace current array with everything from the next arary
+		//Then empty the next array and make each entry blank
+		current, next = next, []*state{}
 
 	}
+
+	//Loop through the current state
+	for _, c := range current {
+
+		//if the current state matches the accept state in ponfa then return true
+		//this means the current condition of the string is within an accept state in our Automataton
+		if c == ponfa.accept {
+			ismatch = true
+			break
+		}
+
+	}
+
+	return ismatch
+}
+
+func main() {
+
+	//Our test String
+	fmt.Println(pomatch("ab.c*|", "cccc"))
 
 }
