@@ -156,7 +156,23 @@ func poregtonfa(postfix string) *nfa {
 		current := []*state{}
 		next := []*state{}
 
-		
+		//Loop through the s String one char at a time
+		for _, r := range s {
+
+			for _, c := range current {
+				
+				if c.symbol == r {
+					
+				}
+
+			}
+
+			//Replace current array with everything from the next arary
+			//Then empty the next array and make each entry blank
+			current, next = next, []*state{}
+
+		}
+
 		return ismatch
 	}
 	
