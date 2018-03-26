@@ -179,6 +179,6 @@ func pomatch(po string, s string) bool {
 func main() {
 
 	//Our test String
-	fmt.Println(pomatch("ab.c*|", "cccc"))
+	fmt.Println(pomatch("bccc", "cccc"))
 
 }
