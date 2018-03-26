@@ -101,6 +101,10 @@ func poregtonfa(postfix string) *nfa {
 
 	}
 
+	if len(nfastack) != 1 {
+		fmt.Println("Error: ", len(nfastack), nfastack)
+	}
+
 	return nfastack[0]
 }
 
@@ -118,7 +122,7 @@ func addState(listState []*state, singleState *state, acceptState *state) []*sta
 		if singleState.edge2 != nil {
 
 			//Recusive Function of the addState
-			listState = addState(listState, singleState.edge1, acceptState)
+			listState = addState(listState, singleState.edge2, acceptState)
 
 		}
 
@@ -250,6 +254,6 @@ func intoPost(infix string) string {
 func main() {
 
 	//Our test String
-	fmt.Println(pomatch(intoPost("ab.c*|"), "cccc"))
+	fmt.Println(pomatch("ab.c*|", "c"))
 
 }
