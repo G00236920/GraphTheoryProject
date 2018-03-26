@@ -253,7 +253,9 @@ func intoPost(infix string) string {
 
 func main() {
 
+	match := intoPost("ab.c*|")
+
 	//Our test String
-	fmt.Println(pomatch("ab.c*|", "c"))
+	fmt.Println(pomatch(match, "cccc"))
 
 }
