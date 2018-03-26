@@ -101,10 +101,6 @@ func poregtonfa(postfix string) *nfa {
 
 	}
 
-	if len(nfastack) != 1 {
-		fmt.Println("Error: ", len(nfastack), nfastack)
-	}
-
 	return nfastack[0]
 }
 
@@ -253,9 +249,15 @@ func intoPost(infix string) string {
 
 func main() {
 
-	match := intoPost("ab.c*|")
+	//Testers
+	//Postfix = "ab.c*|"
+	//Infix = "(a.b)c*|"
+
+	match := intoPost("(a.b)c*|")
+
+	fmt.Println(match)
 
 	//Our test String
-	fmt.Println(pomatch(match, "cccc"))
+	fmt.Println(pomatch(match, "b"))
 
 }
