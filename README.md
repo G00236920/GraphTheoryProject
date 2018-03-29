@@ -68,9 +68,9 @@ You will be asked to enter an Option either to run a test or to exit the program
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Golang](https://golang.org/) - The coding Language used
+* [Visual Studio Code](https://code.visualstudio.com/) - The Development text editor
+* [Cmder](http://cmder.net/) - Used in place of a command line or terminal
 
 ## Contributing
 
