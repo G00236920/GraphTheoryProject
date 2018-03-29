@@ -5,7 +5,9 @@ The project is being assigned by Dr. Ian Mcloughlin.
 
 
 ### Prerequisites
-
+- Git installed on the local machine
+- Golang installed on the local machine
+- An understanding of NFA conditions in infix or postfic notation
 
 ### Installing and starting the program
 
@@ -56,7 +58,6 @@ You will be asked to enter an Option either to run a test or to exit the program
 	- ac
 	- bc
 	- abc
-	
 
 ## Deployment
 
@@ -72,7 +73,12 @@ You will be asked to enter an Option either to run a test or to exit the program
 * [Visual Studio Code](https://code.visualstudio.com/) - The Development text editor
 * [Cmder](http://cmder.net/) - Used in place of a command line or terminal
 
-## Contributing
+## Research and Theory
+
+[Shunting Yard Algorithm](https://brilliant.org/wiki/shunting-yard-algorithm/) For converting from infix to postfix notation.
+[Deterministic Finite Automata](https://www.tutorialspoint.com/automata_theory/deterministic_finite_automaton.htm DFA Example.
+[Non-Deterministic Finite Automata](https://www.tutorialspoint.com/automata_theory/non_deterministic_finite_automaton.htm) NFA Example.
+[Thompson's Regular Expression Explaination](https://swtch.com/~rsc/regexp/regexp1.html) To explain how to implement regular Expressions in GoLang.
 
 
 
