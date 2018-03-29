@@ -1,5 +1,7 @@
 # Ignore all
 *
+
+# ignore a file type
 *.exe
 
 # Unignore all with extensions
