@@ -95,7 +95,6 @@ You will be asked to enter an Option either to run a test or to exit the program
 
 ## How the Program works
 When the user starts the program they are presented with an option to run a test or end the program, if the user chooses to the end the program then the programn exits.
-
 If the user chooses to run the program then it will start the runTest method,
 - Here the program requests the user to enter a Condition for the NFA.
 - The program then determines if the condition is in postfix notation or infix notation based on the string containing brackets or notation
@@ -158,8 +157,21 @@ If the user chooses to run the program then it will start the runTest method,
 				- set its edge2 to the blank accept state we created.
 				- add to the nfastack the new nfa consisting of the initial and accept states we created.
 			- if the current character is anything except the characters mentioned above.
-				- 
-		
+				- A blank accept state is created.
+				- A new initial state is created with edge1 set to the blank accept state and the symbol rune being set to the charactar.
+				- New nfa struct added to the nfastack with both the new initial and accept state added.
+		- Now the nfastack is returned.	
+	- Two states are created, a current state and the next state.	
+	- Then we add the ponfa initial and accept state to the current array of states.
+	- we then loop through testString.
+		- then while looping we loop through the current state
+			- If the symbol of the current state is equal to the current character of the test string, add a state to the next state, which has an edge pointer and an accept state pointer.
+		- Replace current array with everything from the next arary, then empty the next array
+	- Loop through the current state against
+		- If the current state in the loop is equal to the accept state of ponfa, then the function will return a true function, meaning the string has met the condition.
+		- Anything else will return a false value.
+- The program will continue back to the menu until the user tells it to exit, by selecting option 2.
+				
 
 
 ## Built With
