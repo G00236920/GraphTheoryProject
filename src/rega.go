@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 type state struct {
@@ -249,15 +250,67 @@ func intoPost(infix string) string {
 
 func main() {
 
+	for {
+		var input string
+
+		fmt.Println("Please Choose an Option")
+		fmt.Println("\t1. Test a Condition against a string")
+		fmt.Println("\t2. Exit the program")
+
+		fmt.Print("-> ")
+
+		fmt.Scanln(&input)
+
+		switch input {
+		case "1":
+			//Run the test
+			runTest()
+		case "2":
+			//Close the program
+			os.Exit(3)
+		default:
+			fmt.Println("Invalid input")
+		}
+
+	}
+
+}
+
+func runTest() {
+
 	//Testers
 	//Postfix = "ab.c*|"
 	//Infix = "(a.b)c*|"
 
-	match := intoPost("(a.b)c*|")
+	var condition string
+	var testString string
 
-	fmt.Println(match)
+	//Ask the user for the Condition
+	fmt.Println("Please enter the Condition")
+	fmt.Print("-> ")
+	fmt.Scanln(&condition)
+
+	//Loop through the string to test if the condition uses infix notation
+	for _, r := range condition {
+
+		// if the string contains brackets it must be infix
+		if r == '(' || r == ')' {
+
+			//Convert the infix notation to postfix
+			condition = intoPost(condition)
+
+			break
+		}
+
+	}
+
+	//Ask the user for the string to test the condition against
+	fmt.Println("Please enter the test String")
+	fmt.Print("-> ")
+	fmt.Scanln(&testString)
+	fmt.Print("\n\n")
 
 	//Our test String
-	fmt.Println(pomatch(match, "b"))
-
+	fmt.Printf("The string %s is accepted by the condition %s : %t\n\n", testString, condition, pomatch(condition, testString))
+	fmt.Println()
 }
