@@ -248,34 +248,6 @@ func intoPost(infix string) string {
 
 }
 
-func main() {
-
-	for {
-		var input string
-
-		fmt.Println("Please Choose an Option")
-		fmt.Println("\t1. Test a Condition against a string")
-		fmt.Println("\t2. Exit the program")
-
-		fmt.Print("-> ")
-
-		fmt.Scanln(&input)
-
-		switch input {
-		case "1":
-			//Run the test
-			runTest()
-		case "2":
-			//Close the program
-			os.Exit(3)
-		default:
-			fmt.Println("Invalid input")
-		}
-
-	}
-
-}
-
 func runTest() {
 
 	//Testers
@@ -313,4 +285,32 @@ func runTest() {
 	//Our test String
 	fmt.Printf("The string %s is accepted by the condition %s : %t\n\n", testString, condition, pomatch(condition, testString))
 	fmt.Println()
+}
+
+func main() {
+
+	for {
+		var input string
+
+		fmt.Println("Please Choose an Option")
+		fmt.Println("\t1. Test a Condition against a string")
+		fmt.Println("\t2. Exit the program")
+
+		fmt.Print("-> ")
+
+		fmt.Scanln(&input)
+
+		switch input {
+		case "1":
+			//Run the test
+			runTest()
+		case "2":
+			//Close the program
+			os.Exit(3)
+		default:
+			fmt.Println("Invalid input")
+		}
+
+	}
+
 }
