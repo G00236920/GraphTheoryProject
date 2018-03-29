@@ -76,7 +76,7 @@ You will be asked to enter an Option either to run a test or to exit the program
 ## Research and Theory
 
 [Shunting Yard Algorithm](https://brilliant.org/wiki/shunting-yard-algorithm/) For converting from infix to postfix notation.
-[Deterministic Finite Automata](https://www.tutorialspoint.com/automata_theory/deterministic_finite_automaton.htm DFA Example.
+[Deterministic Finite Automata](https://www.tutorialspoint.com/automata_theory/deterministic_finite_automaton.htm) DFA Example.
 [Non-Deterministic Finite Automata](https://www.tutorialspoint.com/automata_theory/non_deterministic_finite_automaton.htm) NFA Example.
 [Thompson's Regular Expression Explaination](https://swtch.com/~rsc/regexp/regexp1.html) To explain how to implement regular Expressions in GoLang.
 
